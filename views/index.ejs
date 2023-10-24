@@ -11,29 +11,40 @@
         <h1>FPL Gameweek Summary</h1>
     </div>
     <div class="container">
-        <select class="form-select" aria-label="Default select example">
-            <option selected>Gameweek</option>
-            <!-- for each gameweek data make a list item -->
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
-        <div class="card">
-            <div class="card-header">
-              Featured
-            </div>
-            <!-- default to gameweek1 -->
-            <div class="card-body">
-                <ul class="list-group">
-                <!-- insert gameweek data here -->
-                    <li class="list-group-item">An item</li>
-                    <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li>
-                    <li class="list-group-item">A fourth item</li>
-                    <li class="list-group-item">And a fifth one</li>
-                </ul>
-            </div>
-          </div>
+        <form action="/" method="post">
+            <select name="gw" class="form-select">
+                <option selected>Gameweek</option>
+                <!-- for each gameweek data make a list item -->
+                <% locals.data.forEach(gw => { %>
+                    <% if (gw.finished != false) { %>
+                        <option value="<%=gw.id %>"><%=gw.id %></option>
+                    <% } %>
+                <% }) %>
+            </select>
+            <button id="btn">Go</button>
+        </form>
+        <% if (locals.selected) { %>
+
+            <% } else { %>
+                <!-- default to gameweek1 -->
+                <div class="card">
+                    <div class="card-header">
+                      <%= locals.data[0].name %>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                        <!-- insert gameweek data here -->
+                            <li class="list-group-item">Average Score: <%=locals.data[0].average_entry_score %></li>
+                            <li class="list-group-item">Highest Scoring Team ID: <%=locals.data[0].highest_scoring_entry %></li>
+                            <li class="list-group-item">Highest Score: <%=locals.data[0].highest_score %></li>
+                            <li class="list-group-item">Most Selected: <%=locals.data[0].most_selected %></li>
+                            <li class="list-group-item">Most Transferred In: <%=locals.data[0].most_transferred_in %></li>
+                            <li class="list-group-item">Most Captained: <%=locals.data[0].most_captained %></li>
+                            <li class="list-group-item">Most Vice-Captained: <%=locals.data[0].most_vice_captained %></li>
+                        </ul>
+                    </div>
+                  </div>
+            <% } %>
     </div>
 </body>
 </html>
