@@ -12,8 +12,8 @@
     </div>
     <div class="container">
         <form action="/" method="post">
+            <span>Select a gameweek</span>
             <select name="gw" class="form-select">
-                <option selected>Gameweek</option>
                 <!-- for each gameweek data make a list item -->
                 <% locals.data.events.forEach(gw => { %>
                     <% if (gw.finished != false) { %>
