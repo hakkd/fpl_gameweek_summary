@@ -24,7 +24,23 @@
             <button id="btn">Go</button>
         </form>
         <% if (locals.selected) { %>
-
+            <div class="card">
+                <div class="card-header">
+                  <%= locals.selected.name %>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                    <!-- insert gameweek data here -->
+                        <li class="list-group-item">Average Score: <%=locals.selected.average_entry_score %></li>
+                        <li class="list-group-item">Highest Scoring Team ID: <%=locals.selected.highest_scoring_entry %></li>
+                        <li class="list-group-item">Highest Score: <%=locals.selected.highest_score %></li>
+                        <li class="list-group-item">Most Selected: <%=locals.selected.most_selected %></li>
+                        <li class="list-group-item">Most Transferred In: <%=locals.selected.most_transferred_in %></li>
+                        <li class="list-group-item">Most Captained: <%=locals.selected.most_captained %></li>
+                        <li class="list-group-item">Most Vice-Captained: <%=locals.selected.most_vice_captained %></li>
+                    </ul>
+                </div>
+              </div>
             <% } else { %>
                 <!-- default to gameweek1 -->
                 <div class="card">

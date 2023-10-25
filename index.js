@@ -23,14 +23,15 @@ app.post("/", async (req, res) => {
     try {
         console.log(req.body.gw);
         const response = await axios.get("https://fantasy.premierleague.com/api/bootstrap-static/");
-        const result = response.data.events;
+        const gameweeks = response.data.events;
+        const players = response.data.elements;
         const gw = req.body.gw;
         const selected_gw = result.filter(
             data => {
                 return data.id == gw;
             }
         );
-        res.render("index.ejs", { data: result, selected: selected_gw});
+        res.render("index.ejs", { data: gameweeks, selected: selected_gw, players: players});
     } catch (error) {
         res.status(404).send(error);
     }
