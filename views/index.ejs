@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>FPL Gameweek Summary</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
@@ -15,7 +15,7 @@
             <select name="gw" class="form-select">
                 <option selected>Gameweek</option>
                 <!-- for each gameweek data make a list item -->
-                <% locals.data.forEach(gw => { %>
+                <% locals.data.events.forEach(gw => { %>
                     <% if (gw.finished != false) { %>
                         <option value="<%=gw.id %>"><%=gw.id %></option>
                     <% } %>
@@ -23,21 +23,22 @@
             </select>
             <button id="btn">Go</button>
         </form>
-        <% if (locals.selected) { %>
+        <% if (locals.gw != 0) { %>
             <div class="card">
                 <div class="card-header">
-                  <%= locals.selected.name %>
+                  <%= locals.data.events[locals.gw].name %>
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
                     <!-- insert gameweek data here -->
-                        <li class="list-group-item">Average Score: <%=locals.selected.average_entry_score %></li>
-                        <li class="list-group-item">Highest Scoring Team ID: <%=locals.selected.highest_scoring_entry %></li>
-                        <li class="list-group-item">Highest Score: <%=locals.selected.highest_score %></li>
-                        <li class="list-group-item">Most Selected: <%=locals.selected.most_selected %></li>
-                        <li class="list-group-item">Most Transferred In: <%=locals.selected.most_transferred_in %></li>
-                        <li class="list-group-item">Most Captained: <%=locals.selected.most_captained %></li>
-                        <li class="list-group-item">Most Vice-Captained: <%=locals.selected.most_vice_captained %></li>
+                    <li class="list-group-item">Average Score: <%=locals.data.events[locals.gw].average_entry_score %></li>
+                    <li class="list-group-item">Highest Scoring Team ID: <%=locals.data.events[locals.gw].highest_scoring_entry %></li>
+                    <li class="list-group-item">Highest Score: <%=locals.data.events[locals.gw].highest_score %></li>
+                    <li class="list-group-item">Most Selected: <%=locals.getPlayerNameById(locals.data.events[locals.gw].most_selected, locals.data.elements) %></li>
+                    <li class="list-group-item">Most Transferred In: <%=locals.getPlayerNameById(locals.data.events[locals.gw].most_transferred_in, locals.data.elements)%></li>
+                    <li class="list-group-item">Most Captained: <%=locals.getPlayerNameById(locals.data.events[locals.gw].most_captained, locals.data.elements)%></li>
+                    <li class="list-group-item">Most Vice-Captained: <%=locals.getPlayerNameById(locals.data.events[locals.gw].most_vice_captained, locals.data.elements)%></li>
+                    <li class="list-group-item">Highest Scoring Player: <%=locals.getPlayerNameById(locals.data.events[locals.gw].top_element_info.id, locals.data.elements)%> (<%=locals.data.events[locals.gw].top_element_info.points %> points)</li>
                     </ul>
                 </div>
               </div>
@@ -45,18 +46,19 @@
                 <!-- default to gameweek1 -->
                 <div class="card">
                     <div class="card-header">
-                      <%= locals.data[0].name %>
+                      <%= locals.data.events[0].name %>
                     </div>
                     <div class="card-body">
                         <ul class="list-group">
                         <!-- insert gameweek data here -->
-                            <li class="list-group-item">Average Score: <%=locals.data[0].average_entry_score %></li>
-                            <li class="list-group-item">Highest Scoring Team ID: <%=locals.data[0].highest_scoring_entry %></li>
-                            <li class="list-group-item">Highest Score: <%=locals.data[0].highest_score %></li>
-                            <li class="list-group-item">Most Selected: <%=locals.data[0].most_selected %></li>
-                            <li class="list-group-item">Most Transferred In: <%=locals.data[0].most_transferred_in %></li>
-                            <li class="list-group-item">Most Captained: <%=locals.data[0].most_captained %></li>
-                            <li class="list-group-item">Most Vice-Captained: <%=locals.data[0].most_vice_captained %></li>
+                        <li class="list-group-item">Average Score: <%=locals.data.events[0].average_entry_score %></li>
+                        <li class="list-group-item">Highest Scoring Team ID: <%=locals.data.events[0].highest_scoring_entry %></li>
+                        <li class="list-group-item">Highest Score: <%=locals.data.events[0].highest_score %></li>
+                        <li class="list-group-item">Most Selected: <%=locals.getPlayerNameById(locals.data.events[0].most_selected, locals.data.elements) %></li>
+                        <li class="list-group-item">Most Transferred In: <%=locals.getPlayerNameById(locals.data.events[0].most_transferred_in, locals.data.elements)%></li>
+                        <li class="list-group-item">Most Captained: <%=locals.getPlayerNameById(locals.data.events[0].most_captained, locals.data.elements)%></li>
+                        <li class="list-group-item">Most Vice-Captained: <%=locals.getPlayerNameById(locals.data.events[0].most_vice_captained, locals.data.elements)%></li>
+                        <li class="list-group-item">Highest Scoring Player: <%=locals.getPlayerNameById(locals.data.events[0].top_element_info.id, locals.data.elements)%> (<%=locals.data.events[locals.gw].top_element_info.points %> points)</li>
                         </ul>
                     </div>
                   </div>

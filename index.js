@@ -8,12 +8,26 @@ const port = 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.locals.getPlayerNameById = function(id, players) {
+    console.log(id);
+    const player = players.filter(
+        element => {
+            return element.id == id;
+        }
+    )[0];
+    const firstName = player.first_name;
+    const lastName = player.second_name;
+    const fullName = firstName + " " + lastName;
+    return fullName;
+}
+
+var gw = 0;
+
 app.get("/", async (req,res) => {
     try {
         const response = await axios.get("https://fantasy.premierleague.com/api/bootstrap-static/");
-        const result = response.data.events;
-        console.log(result);
-        res.render("index.ejs", { data: result, selected: null});
+        const result = response.data;
+        res.render("index.ejs", { data: result, gw: gw });
     } catch (error) {
         res.status(404).send(error);
     }
@@ -21,17 +35,16 @@ app.get("/", async (req,res) => {
 
 app.post("/", async (req, res) => {
     try {
-        console.log(req.body.gw);
         const response = await axios.get("https://fantasy.premierleague.com/api/bootstrap-static/");
-        const gameweeks = response.data.events;
-        const players = response.data.elements;
-        const gw = req.body.gw;
-        const selected_gw = result.filter(
+        const result = response.data;
+        gw = req.body.gw - 1;
+        const selected_gw = result.events.filter(
             data => {
                 return data.id == gw;
             }
         );
-        res.render("index.ejs", { data: gameweeks, selected: selected_gw, players: players});
+        console.log(selected_gw);
+        res.render("index.ejs", { data: result, gw: gw});
     } catch (error) {
         res.status(404).send(error);
     }
